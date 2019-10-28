@@ -226,7 +226,7 @@
 						align: 'center',
 					},
 					{
-						width: 110,
+						width: 180,
 						title: '产品名字',
 						key: 'goodsName',
 						sortable: true,
@@ -244,7 +244,8 @@
 							}, [
 								h('img', {
 									style: {
-										width: "60px",
+										height: "100px",
+										padding:"4px 0",
 									},
 									attrs: {
 										src: params.row.goodsIcon
@@ -286,7 +287,7 @@
 						key: 'position',
 					},
 					{
-						width: 100,
+						width: 120,
 						align: 'center',
 						title: '库存',
 						key: 'reserve',
@@ -305,13 +306,13 @@
 						key: 'packingUnit',
 					},
 					{
-						width: 100,
+						width: 120,
 						align: 'center',
 						title: '登记编号',
 						key: 'regNumber',
 					},
 					{
-						width: 100,
+						width: 160,
 						align: 'center',
 						title: '产品简介',
 						key: 'product_info',
@@ -323,7 +324,7 @@
 						key: 'producer',
 					},
 					{
-						width: 100,
+						width: 160,
 						align: 'center',
 						title: '产品条码',
 						key: 'productCode',
@@ -375,6 +376,7 @@
 						sortable: true,
 					},
 					{
+						width: 160,
 						title: '操作',
 						slot: 'action',
 						align: 'center',
@@ -632,11 +634,7 @@
 			display: none
 		}
 	}
-
-	.ivu-table-header thead tr th {
-		padding: 0 0;
-	}
-
+	
 	.display_flex {
 		display: flex;
 		align-items: center;
