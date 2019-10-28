@@ -2,6 +2,10 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Bmob from 'hydrogen-js-sdk';
 import ViewUI from 'view-design';
+import Print from 'vue-print-nb'
+import common from '@/serve/common.js';
+import expandRow from '@/components/component/expandRow.vue';
+
 // import style
 import 'view-design/dist/styles/iview.css';
 import landing from '@/components/LandingPage';
@@ -21,8 +25,9 @@ import customs from '@/components/manage/customs'; // 客户管理页面
 import producers from '@/components/manage/producers'; // 客户管理页面
 
 Bmob.initialize('825b954fe97e9186', '109063', '47f76baf4ee4d90630d7b2bc17f7505c');
-Vue.use(Router)
+Vue.use(Router);
 Vue.use(ViewUI);
+Vue.use(Print);
 
 export default new Router({
   routes: [

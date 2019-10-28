@@ -182,6 +182,7 @@
 	import common from '@/serve/common.js';
 	import goods from '@/serve/goods.js';
 	import XLSX from 'xlsx';
+	import Print from 'vue-print-nb';
 
 	//let userid = JSON.parse(localStorage.getItem('bmob')).objectId;
 	let that;

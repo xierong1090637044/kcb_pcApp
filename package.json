@@ -19,7 +19,7 @@
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
     "test": "npm run unit && npm run e2e",
     "unit": "karma start test/unit/karma.conf.js",
-		"pack64": "electron-packager . myClient --win --out ../myClient --arch=x64 --app-version=0.0.1 --electron-version=2.0.0",
+    "pack64": "electron-packager . myClient --win --out ../myClient --arch=x64 --app-version=0.0.1 --electron-version=2.0.0",
     "postinstall": "npm run lint:fix"
   },
   "build": {
@@ -58,13 +58,17 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "has-flag": "^4.0.0",
     "hydrogen-js-sdk": "^2.2.0",
+    "jr-qrcode": "^1.1.4",
     "view-design": "^4.0.1",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
+    "vue-print-nb": "^1.4.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
-    "vuex-electron": "^1.0.0"
+    "vuex-electron": "^1.0.0",
+    "xlsx": "^0.15.1"
   },
   "devDependencies": {
     "ajv": "^6.5.0",
