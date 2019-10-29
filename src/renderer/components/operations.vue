@@ -1,5 +1,12 @@
 <template>
 	<div>
+		<div style="margin-bottom: 10px;">
+			<Breadcrumb  separator="<b style='color: #999;'>/</b>">
+				<BreadcrumbItem to="/">首页</BreadcrumbItem>
+				<BreadcrumbItem  to="/home/goods">操作记录</BreadcrumbItem>
+			</Breadcrumb>
+		</div>
+		
 		<div style="display: flex;align-items: center;margin-bottom: 20px;">
 			<Dropdown style="margin-right: 10px" @on-click="selected_options">
 				<Button type="primary">
@@ -7,7 +14,7 @@
 					<Icon type="ios-arrow-down"></Icon>
 				</Button>
 				<DropdownMenu slot="list">
-					<DropdownItem name="0">全部</DropdownItem>
+					<DropdownItem name="0">全部恶趣味 </DropdownItem>
 					<DropdownItem name="-1">出库</DropdownItem>
 					<DropdownItem name="1">入库</DropdownItem>
 					<DropdownItem name="2">退货</DropdownItem>
@@ -21,11 +28,11 @@
 
 		</div>
 
-		<Table :columns="columns" :data="order_opreations" :loading="loading" ref="table" border size="small" :height="screenHeight - 200"
+		<Table :columns="columns" :data="order_opreations" :loading="loading" ref="table" border size="small" :height="screenHeight - 250"
 		 v-if="type == 0"></Table>
-		<Table :columns="pandian_columns" :data="order_bills" :loading="loading" ref="table" border size="small" :height="screenHeight - 200"
+		<Table :columns="pandian_columns" :data="order_bills" :loading="loading" ref="table" border size="small" :height="screenHeight - 250"
 		 v-else-if="type == 3"></Table>
-		<Table :columns="bills_columns" :data="order_bills" ref="table" border size="small" :height="screenHeight - 200"
+		<Table :columns="bills_columns" :data="order_bills" ref="table" border size="small" :height="screenHeight - 250"
 		 v-else></Table>
 
 

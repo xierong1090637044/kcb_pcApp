@@ -2,15 +2,21 @@
 <template>
 	<div style="position: relative;">
 		<Spin size="large" fix v-if="loading"></Spin>
-
+		
+		<div style="margin-bottom: 10px;">
+			<Breadcrumb  separator="<b style='color: #999;'>/</b>">
+				<BreadcrumbItem to="/">首页</BreadcrumbItem>
+				<BreadcrumbItem  to="/home/goods">供应商管理</BreadcrumbItem>
+			</Breadcrumb>
+		</div>
+		
 		<div style="margin-bottom: 10px;display: flex;align-items: center;justify-content: space-between;">
-
 			<div style="display: flex;align-items: center;">
 				<Button type="warning" @click="modal3 = true" icon="md-add" style="margin-right: 10px;background: #ed4014;">添加供货商</Button>
 			</div>
-
 		</div>
-		<Table :columns="columns" :data="data" stripe border>
+		
+		<Table :columns="columns" :data="data" stripe border :height="screenHeight - 250">
 			<template slot-scope="{ row, index }" slot="action">
 				<Button type="primary" size="small" style="margin-right: 5px" @click="edit(row)">修改</Button>
 				<Button type="error" size="small" @click="remove(row)">删除</Button>
@@ -70,6 +76,7 @@
 		},
 		data() {
 			return {
+				screenHeight: window.innerHeight,
 				producer: {
 					producer_name: "",
 					producer_address:"",

@@ -1,13 +1,9 @@
 <template>
 	<div>
 		<div style="margin-bottom: 10px;">
-			<Breadcrumb  separator="<b style='color: #ff5500;padding: 0 5px;'>=></b>">
-				<BreadcrumbItem to="/">
-					<Icon type="ios-home-outline"></Icon> Home
-				</BreadcrumbItem>
-				<BreadcrumbItem  to="/home/goods">
-					<Icon type="ios-cafe"></Icon> 产品管理
-				</BreadcrumbItem>
+			<Breadcrumb  separator="<b style='color: #999;'>/</b>">
+				<BreadcrumbItem to="/">首页</BreadcrumbItem>
+				<BreadcrumbItem  to="/home/goods">产品管理</BreadcrumbItem>
 			</Breadcrumb>
 		</div>
 		
@@ -67,8 +63,7 @@
 
 
 		<Table :columns="columns" :data="goods" :loading="loading" ref="table" border size="small" :height="screenHeight - 240"
-		 @on-select="get_select" @on-select-cancel="cancle_select" @on-selection-change="get_select" @on-select-all-cancel="cancle_select"
-		 id="print_table">
+		 @on-select="get_select" @on-select-cancel="cancle_select" @on-select-all-cancel="cancle_select" id="print_table">
 			<template slot-scope="{ row, index }" slot="action">
 				<Button type="primary" size="small" v-print="'#printMe'" @click="Print(row)">打印二维码</Button>
 			</template>
@@ -485,6 +480,7 @@
 
 			//选择某一项时事件
 			get_select(selection) {
+				console.log(selection)
 				that.select_goods = selection
 			},
 
@@ -610,13 +606,10 @@
 				query.find().then(res => {
 					console.log(res);
 					for (let item of res) {
-						item.class = (item.goodsClass ? (item.goodsClass.class_text || "") : "") + "    " + (item.second_class ?
-							(item.second_class
-								.class_text || "") : "")
+						item.class = (item.goodsClass ? (item.goodsClass.class_text || "") : "") + "    " + (item.second_class ?(item.second_class.class_text || "") : "")
 						item.stocks = (item.stocks) ? item.stocks.stock_name : ""
 
-						item.qrcodeImg = jrQrcode.getQrBase64((item.productCode) ? item.productCode : item.objectId + '-' +
-							false)
+						item.qrcodeImg = jrQrcode.getQrBase64((item.productCode) ? item.productCode : item.objectId + '-' +false)
 						item.productCode = (item.productCode) ? item.productCode : item.objectId + '-' + false
 					}
 					this.goods = res;
