@@ -6,7 +6,8 @@ import App from './App'
 import router from './router'
 import store from './store'
 
-Bmob.initialize('825b954fe97e9186', '109063', '47f76baf4ee4d90630d7b2bc17f7505c');
+Bmob.initialize("db7d7df44b87bb60", "109063","db1c531222c31c7511629dd458a72436");
+
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.use(Bmob)
 Vue.http = Vue.prototype.$http = axios
