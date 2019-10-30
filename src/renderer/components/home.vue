@@ -31,14 +31,10 @@
 		<Layout>
 			<Header>
 				<Menu mode="horizontal" theme="dark" active-name="1" @on-select="select_horizontal_item">
-					<div class="layout-logo" style="color: #fff;line-height: 30px;font-weight: bold;font-size: 16px;background: unset;width: auto;margin-top: 4px;">库存表
-						V 1.0.0</div>
+					<div class="layout-logo" style="color: #fff;line-height: 30px;font-weight: bold;font-size: 16px;background: unset;width: auto;margin-top: 4px;">
+						库存管理V 1.0.0
+					</div>
 					<div class="layout-nav">
-						<MenuItem name="2" to='download'>
-						<Icon type="md-paper" size="24" />
-						加入我们
-						</MenuItem>
-
 						<MenuItem name="3">
 						<Icon type="ios-log-out" size="24" />
 						退出登录

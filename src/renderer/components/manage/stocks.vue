@@ -77,11 +77,12 @@
 </template>
 <script>
 	import manage from '@/serve/manage.js';
-
+	import jrQrcode from "jr-qrcode";
+	
 	let that;
 	export default {
 		components: {
-
+			
 		},
 		data() {
 			return {
@@ -132,6 +133,28 @@
 						key: 'beizhu',
 					},
 					{
+						title: '仓库二维码',
+						width: 100,
+						key: 'qrcodeImg',
+						render: (h, params) => {
+							return h('div', {
+								style: {
+									"text-align": "center",
+									"padding":"10px 0"
+								},
+							}, [
+								h('img', {
+									style: {
+										width: "65px",
+									},
+									attrs: {
+										src: params.row.qrcodeImg
+									}
+								})
+							]);
+						}
+					},
+					{
 						title: '创建时间',
 						key: 'createdAt',
 						sortable: true
@@ -149,6 +172,9 @@
 			that = this;
 			this.$Loading.start();
 			manage.getstock_list().then(res=>{
+				for(let item of res){
+					item.qrcodeImg = jrQrcode.getQrBase64((item.objectId + '-stock'))
+				}
 				that.data = res
 				manage.get_chargeList().then(res=>{
 					
