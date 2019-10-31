@@ -1,5 +1,16 @@
 <template>
 	<div class="homepage-hero-module">
+		<div class="video-container">
+			<div :style="fixStyle" class="filter"></div>
+			<video :style="fixStyle" autoplay loop class="fillWidth" v-on:canplay="canplay">
+				<source src="@/assets/bg.mp4" type="video/mp4" />
+				浏览器不支持 video 标签，建议升级浏览器。
+			</video>
+			<div class="poster hidden" v-if="!vedioCanPlay">
+				<img :style="fixStyle" src="@/assets/bg.jpg" alt="">
+			</div>
+		</div>
+
 		<div class="index_content">
 
 			<Card dis-hover :padding="padding_size" style="width: 30%;margin:10% 35% 0;margin-top: 15%;">
@@ -81,11 +92,10 @@
 						}
 					],
 					phone: [{
-							required: true,
-							message: '请输入账号',
-							trigger: 'blur'
-						}
-					]
+						required: true,
+						message: '请输入账号',
+						trigger: 'blur'
+					}]
 				},
 				vedioCanPlay: false,
 				fixStyle: ''

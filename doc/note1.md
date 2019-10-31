@@ -1,13 +1,3 @@
-# electron-demo1
-
-#### 介绍
-electron-updater更新electron应用
-
-#### 软件架构
-
-
-#文档使用说明
-
 # 一、npm安装
   
   具体参考[https://www.cnblogs.com/lgx5/p/10732016.html](https://www.cnblogs.com/lgx5/p/10732016.html)
@@ -16,7 +6,7 @@ electron-updater更新electron应用
 
     vue init simulatedgreg/electron-vue my-project
 
-![2019-08-29_140927.png](doc/img/2019-08-29_140927.png)
+![2019-08-29_140927.png](img/2019-08-29_140927.png)
 ## 2.1 electron官网地址
  
      https://electronjs.org/   
@@ -29,7 +19,7 @@ electron-updater更新electron应用
 
     npm run dev
 
-![2019-08-29_150322.png](doc/img/2019-08-29_150322.png)
+![2019-08-29_150322.png](img/2019-08-29_150322.png)
 
 ## 2.4 打包程序electron-builder
     npm run build
@@ -54,7 +44,7 @@ electron-updater更新electron应用
 
 说明：extraResources是把图标资源复制到打包后的根目录,以后托盘时会用到，如图，
 
-![2019-08-29_143025.png](doc/img/2019-08-29_143025.png)
+![2019-08-29_143025.png](img/2019-08-29_143025.png)
 ## 2.6 使用electron-updater更新升级程序
 ### 2.6.1 配置更新程序的地址
 >在package.json中添加如下配置：
@@ -78,6 +68,7 @@ electron-updater更新electron应用
       // =================================================================================================================
     // 更新升级，注意这个autoUpdater不是electron中的autoUpdater
     // 更新地址
+    const fs = require('fs-extra')
     const updateURL = 'http://127.0.0.1:8090/demo/update/'
     // 检测更新，在你想要检查更新的时候执行，renderer事件触发后的操作自行编写
     export function handleUpdate () {
@@ -482,7 +473,7 @@ electron-updater更新electron应用
 
 最终截图：  
 
-![2019-08-29_165425.png](doc/img/2019-08-29_165425.png)
+![2019-08-29_165425.png](img/2019-08-29_165425.png)
 
 问题：每次只要下载后但是我不更新，我下次更新时就不起作用了
 问题分析：在updaterCacheDirName目录中如果存在上次下载的安装包，下次安装时会检测安装包已存在，但是无法进行调用更新，我的解决方法是检测到有新版本时直接将其删除，然后再下载就可以了
@@ -524,8 +515,8 @@ electron-updater更新electron应用
     var log = require('electron-log')
     log.transports.console.level = false
     log.transports.console.level = 'silly'
-    
- 
+
+
 ## 2.10 webapcek4打包静态资源出现找不到渲染进程找不到文件
 一般是文件路径问题，配置publicPath和outputPath属性，limit属性是超过10k的图片资源就不会转化为base64编码，否则转化为base64编码
 
@@ -541,3 +532,370 @@ electron-updater更新electron应用
           }
         }
       },
+     
+     
+# 三、使用外部协议打开应用
+    如使用浏览器启动electron开发的客户端应用
+   
+ 参考：  
+ [1、【Electron】酷家乐客户端开发实践分享 — 浏览器启动客户端](https://webfe.kujiale.com/browser-to-client/)  
+ [2、使用 Electron 从协议处理器启动应用程序](https://segmentfault.com/a/1190000011511106)
+
+## 写一个html页面
+    
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <a class="protocol" href="electron-demo1://open"><h3>electron-demo1://open</h3></a>
+    </body>
+    </html>
+
+## 启动应用代码protocol-handler.js
+    const {app, dialog} = require('electron')
+    const path = require('path')
+    /**
+     * 使用外部协议启动应用
+     */
+    if (process.defaultApp) {
+      if (process.argv.length >= 2) {
+        app.setAsDefaultProtocolClient('electron-demo1', process.execPath, [path.resolve(process.argv[1])])
+      }
+    } else {
+      app.setAsDefaultProtocolClient('electron-demo1')
+    }
+    
+    app.on('open-url', (event, url) => {
+      dialog.showErrorBox('欢迎回来', `您来自: ${url}`)
+    })
+
+## 将protocol-handler.js代码加入到主进程index.js中
+    require('./protocol-handler')
+
+## 打包安装程序，启动html页面，点击启动程序
+![2019-09-02_164105.png](img/2019-09-02_164105.png)
+
+
+# 四、注册快捷键
+## 4.1 注册全局键盘快捷键
+    const electron = require('electron')
+    const app = electron.app
+    const dialog = electron.dialog
+    const globalShortcut = electron.globalShortcut
+    
+    app.on('ready', function () {
+      globalShortcut.register('CommandOrControl+Alt+K', function () {
+        dialog.showMessageBox({
+          type: 'info',
+          message: '成功!',
+          detail: '你按下了一个全局注册的快捷键绑定.',
+          buttons: ['好的']
+        })
+      })
+    })
+    
+    app.on('will-quit', function () {
+      globalShortcut.unregisterAll()
+    })
+
+
+# 五、应用菜单和上下文菜单
+## 5.1 应用菜单application-menu.js
+    const {BrowserWindow, Menu, app, shell, dialog} = require('electron')
+    
+    let template = [{
+      label: '编辑',
+      submenu: [{
+        label: '撤销',
+        accelerator: 'CmdOrCtrl+Z',
+        role: 'undo'
+      }, {
+        label: '重做',
+        accelerator: 'Shift+CmdOrCtrl+Z',
+        role: 'redo'
+      }, {
+        type: 'separator'
+      }, {
+        label: '剪切',
+        accelerator: 'CmdOrCtrl+X',
+        role: 'cut'
+      }, {
+        label: '复制',
+        accelerator: 'CmdOrCtrl+C',
+        role: 'copy'
+      }, {
+        label: '粘贴',
+        accelerator: 'CmdOrCtrl+V',
+        role: 'paste'
+      }, {
+        label: '全选',
+        accelerator: 'CmdOrCtrl+A',
+        role: 'selectall'
+      }]
+    }, {
+      label: '查看',
+      submenu: [{
+        label: '重载',
+        accelerator: 'CmdOrCtrl+R',
+        click: (item, focusedWindow) => {
+          if (focusedWindow) {
+            // 重载之后, 刷新并关闭所有之前打开的次要窗体
+            if (focusedWindow.id === 1) {
+              BrowserWindow.getAllWindows().forEach(win => {
+                if (win.id > 1) win.close()
+              })
+            }
+            focusedWindow.reload()
+          }
+        }
+      }, {
+        label: '切换全屏',
+        accelerator: (() => {
+          if (process.platform === 'darwin') {
+            return 'Ctrl+Command+F'
+          } else {
+            return 'F11'
+          }
+        })(),
+        click: (item, focusedWindow) => {
+          if (focusedWindow) {
+            focusedWindow.setFullScreen(!focusedWindow.isFullScreen())
+          }
+        }
+      }, {
+        label: '切换开发者工具',
+        accelerator: (() => {
+          if (process.platform === 'darwin') {
+            return 'Alt+Command+I'
+          } else {
+            return 'Ctrl+Shift+I'
+          }
+        })(),
+        click: (item, focusedWindow) => {
+          if (focusedWindow) {
+            focusedWindow.toggleDevTools()
+          }
+        }
+      }, {
+        type: 'separator'
+      }, {
+        label: '应用程序菜单演示',
+        click: function (item, focusedWindow) {
+          if (focusedWindow) {
+            const options = {
+              type: 'info',
+              title: '应用程序菜单演示',
+              buttons: ['好的'],
+              message: '此演示用于 "菜单" 部分, 展示如何在应用程序菜单中创建可点击的菜单项.'
+            }
+            dialog.showMessageBox(focusedWindow, options, function () {})
+          }
+        }
+      }]
+    }, {
+      label: '窗口',
+      role: 'window',
+      submenu: [{
+        label: '最小化',
+        accelerator: 'CmdOrCtrl+M',
+        role: 'minimize'
+      }, {
+        label: '关闭',
+        accelerator: 'CmdOrCtrl+W',
+        role: 'close'
+      }, {
+        type: 'separator'
+      }, {
+        label: '重新打开窗口',
+        accelerator: 'CmdOrCtrl+Shift+T',
+        enabled: false,
+        key: 'reopenMenuItem',
+        click: () => {
+          app.emit('activate')
+        }
+      }]
+    }, {
+      label: '帮助',
+      role: 'help',
+      submenu: [{
+        label: '学习更多',
+        click: () => {
+          shell.openExternal('http://electron.atom.io')
+        }
+      }]
+    }]
+    
+    function addUpdateMenuItems (items, position) {
+      if (process.mas) return
+    
+      const version = app.getVersion()
+      let updateItems = [{
+        label: `版本 ${version}`,
+        enabled: false
+      }, {
+        label: '正在检查更新',
+        enabled: false,
+        key: 'checkingForUpdate'
+      }, {
+        label: '检查更新',
+        visible: false,
+        key: 'checkForUpdate',
+        click: () => {
+          require('electron').autoUpdater.checkForUpdates()
+        }
+      }, {
+        label: '重启并安装更新',
+        enabled: true,
+        visible: false,
+        key: 'restartToUpdate',
+        click: () => {
+          require('electron').autoUpdater.quitAndInstall()
+        }
+      }]
+    
+      items.splice.apply(items, [position, 0].concat(updateItems))
+    }
+    
+    function findReopenMenuItem () {
+      const menu = Menu.getApplicationMenu()
+      if (!menu) return
+    
+      let reopenMenuItem
+      menu.items.forEach(item => {
+        if (item.submenu) {
+          item.submenu.items.forEach(item => {
+            if (item.key === 'reopenMenuItem') {
+              reopenMenuItem = item
+            }
+          })
+        }
+      })
+      return reopenMenuItem
+    }
+    
+    if (process.platform === 'darwin') {
+      const name = app.getName()
+      template.unshift({
+        label: name,
+        submenu: [{
+          label: `关于 ${name}`,
+          role: 'about'
+        }, {
+          type: 'separator'
+        }, {
+          label: '服务',
+          role: 'services',
+          submenu: []
+        }, {
+          type: 'separator'
+        }, {
+          label: `隐藏 ${name}`,
+          accelerator: 'Command+H',
+          role: 'hide'
+        }, {
+          label: '隐藏其它',
+          accelerator: 'Command+Alt+H',
+          role: 'hideothers'
+        }, {
+          label: '显示全部',
+          role: 'unhide'
+        }, {
+          type: 'separator'
+        }, {
+          label: '退出',
+          accelerator: 'Command+Q',
+          click: () => {
+            app.quit()
+          }
+        }]
+      })
+    
+      // 窗口菜单.
+      template[3].submenu.push({
+        type: 'separator'
+      }, {
+        label: '前置所有',
+        role: 'front'
+      })
+    
+      addUpdateMenuItems(template[0].submenu, 1)
+    }
+    
+    if (process.platform === 'win32') {
+      const helpMenu = template[template.length - 1].submenu
+      addUpdateMenuItems(helpMenu, 0)
+    }
+    
+    app.on('ready', () => {
+      const menu = Menu.buildFromTemplate(template)
+      Menu.setApplicationMenu(menu)
+    })
+    
+    app.on('browser-window-created', () => {
+      let reopenMenuItem = findReopenMenuItem()
+      if (reopenMenuItem) reopenMenuItem.enabled = false
+    })
+    
+    app.on('window-all-closed', () => {
+      let reopenMenuItem = findReopenMenuItem()
+      if (reopenMenuItem) reopenMenuItem.enabled = true
+    })
+
+## 5.2 上下文菜单
+主进程  
+    
+    const {
+      BrowserWindow,
+      Menu,
+      MenuItem,
+      ipcMain,
+      app
+    } = require('electron')
+    
+    const menu = new Menu()
+    menu.append(new MenuItem({ label: 'Hello',click: () => { console.log('time to print stuff') } }))
+    menu.append(new MenuItem({ type: 'separator' }))
+    menu.append(new MenuItem({ label: 'Electron', type: 'checkbox', checked: true }))
+    
+    app.on('browser-window-created', (event, win) => {
+      win.webContents.on('context-menu', (e, params) => {
+        menu.popup(win, params.x, params.y)
+      })
+    })
+    
+    ipcMain.on('show-context-menu', (event) => {
+      const win = BrowserWindow.fromWebContents(event.sender)
+      menu.popup(win)
+    })
+
+
+渲染器进程(渲染进程可以不需要)  
+
+    const ipc = require('electron').ipcRenderer
+    
+    // 告诉主进程在单击示例按钮时显示菜单
+    const contextMenuBtn = document.getElementById('context-menu')
+    contextMenuBtn.addEventListener('click', function () {
+      ipc.send('show-context-menu')
+    })
+
+
+## 5.3 主进程与渲染进程之间的通信
+
+>ipcMain、ipRenderer通信
+
+  ipcMain.on('event',()=>())
+
+  ipRenderer.once('event',()=>())  //只执行一次
+  ipRenderer.on('event',()=>()) //执行多次，假如有一个按钮发送此事件，主进程只会接收一次，但主进程返回的通信会合并上几次的结果，导致不符合开发要求
+
+
+>主进程向渲染进程发消息
+
+    mainWin.WebContents.send('event',msg)  
+    ipcMain.on('event',(e)=>(
+      e.sender.send('event',msg)
+    ))

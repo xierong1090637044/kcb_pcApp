@@ -17,7 +17,6 @@ module.exports = {
   ],
   'rules': {
     // allow paren-less arrow functions
-		"quotes": [1, "single"], //引号类型 `` "" ''
     'arrow-parens': 0,
     // allow async-await
     'generator-star-spacing': 0,

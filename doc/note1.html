@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>note1.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+	font-size: 14px;
+	padding: 0 12px;
+	line-height: 22px;
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family:  "Meiryo", "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+</head>
+<body>
+<h1 id="%E4%B8%80%E3%80%81npm%E5%AE%89%E8%A3%85">一、npm安装</h1>
+<p>具体参考<a href="https://www.cnblogs.com/lgx5/p/10732016.html">https://www.cnblogs.com/lgx5/p/10732016.html</a></p>
+<h1 id="%E4%BA%8C%E3%80%81%E4%BD%BF%E7%94%A8vue-cli%E6%9E%84%E5%BB%BAelectron%E9%A1%B9%E7%9B%AE">二、使用vue-cli构建electron项目</h1>
+<pre><code>vue init simulatedgreg/electron-vue my-project
+</code></pre>
+<p><img src="img/2019-08-29_140927.png" alt="2019-08-29_140927.png"></p>
+<h2 id="21-electron%E5%AE%98%E7%BD%91%E5%9C%B0%E5%9D%80">2.1 electron官网地址</h2>
+<pre><code> https://electronjs.org/   
+</code></pre>
+<h2 id="22-%E4%B8%8B%E8%BD%BDpackagejson%E4%B8%AD%E7%9A%84%E4%BE%9D%E8%B5%96">2.2 下载package.json中的依赖</h2>
+<pre><code>npm install
+</code></pre>
+<h2 id="23-%E8%BF%90%E8%A1%8C">2.3 运行</h2>
+<pre><code>npm run dev
+</code></pre>
+<p><img src="img/2019-08-29_150322.png" alt="2019-08-29_150322.png"></p>
+<h2 id="24-%E6%89%93%E5%8C%85%E7%A8%8B%E5%BA%8Felectron-builder">2.4 打包程序electron-builder</h2>
+<pre><code>npm run build
+</code></pre>
+<h2 id="25-win32%E6%89%93%E5%8C%85%E6%88%90exe%E6%96%87%E4%BB%B6">2.5 win32打包成exe文件</h2>
+<pre><code> &quot;win&quot;: {
+  &quot;icon&quot;: &quot;build/icons/icon.ico&quot;,
+  &quot;target&quot;: &quot;nsis&quot;
+},
+&quot;nsis&quot;: {
+  &quot;oneClick&quot;: false,
+  &quot;allowToChangeInstallationDirectory&quot;: true,//自定义安装目录
+  &quot;allowElevation&quot;: true,
+  &quot;installerIcon&quot;: &quot;build/icons/icon.ico&quot;,
+  &quot;createDesktopShortcut&quot;: true //生成桌面图标
+},
+&quot;extraResources&quot;: {
+  &quot;from&quot;: &quot;build/icons&quot;,
+  &quot;to&quot;: &quot;./&quot;
+},
+</code></pre>
+<p>说明：extraResources是把图标资源复制到打包后的根目录,以后托盘时会用到，如图，</p>
+<p><img src="img/2019-08-29_143025.png" alt="2019-08-29_143025.png"></p>
+<h2 id="26-%E4%BD%BF%E7%94%A8electron-updater%E6%9B%B4%E6%96%B0%E5%8D%87%E7%BA%A7%E7%A8%8B%E5%BA%8F">2.6 使用electron-updater更新升级程序</h2>
+<h3 id="261-%E9%85%8D%E7%BD%AE%E6%9B%B4%E6%96%B0%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%9C%B0%E5%9D%80">2.6.1 配置更新程序的地址</h3>
+<blockquote>
+<p>在package.json中添加如下配置：</p>
+</blockquote>
+<pre><code> &quot;publish&quot;: [
+  {
+    &quot;provider&quot;: &quot;generic&quot;,
+    &quot;url&quot;: &quot;http://127.0.0.1:8090/demo/&quot; 
+  }
+]
+
+说明：url是自己放置更新程序包的访问地址，这里的地址是使用nginx构建的文件服务器地址,上面的这个地址一定要配置，否则在打包时无法生成app-update.yml文件而会导致无法升级
+</code></pre>
+<h3 id="262-%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96">2.6.2 添加依赖</h3>
+<pre><code>&quot;electron-updater&quot;: &quot;^4.0.0&quot;
+</code></pre>
+<blockquote>
+<p>升级的时候往往就是因为electron-updater版本不搭配，导致一些乱七八糟的问题出现，此时electron的版本是2.0.4，打包的时候如果electron-updater的版本小于4.0.0，会出现无法打包，所以修改electron-updater的版本为^4.0.0</p>
+</blockquote>
+<h3 id="263-%E4%B8%BB%E8%BF%9B%E7%A8%8B%E4%B8%AD%E9%85%8D%E7%BD%AE%E5%8D%87%E7%BA%A7">2.6.3 主进程中配置升级</h3>
+<pre><code>  // =================================================================================================================
+// 更新升级，注意这个autoUpdater不是electron中的autoUpdater
+// 更新地址
+const fs = require('fs-extra')
+const updateURL = 'http://127.0.0.1:8090/demo/update/'
+// 检测更新，在你想要检查更新的时候执行，renderer事件触发后的操作自行编写
+export function handleUpdate () {
+ //= ==============================================================================================================
+//                            清除每次更新下载的文件，否则无法进行更新
+//= ==============================================================================================================
+// updaterCacheDirName的值与src/main/app-update.yml中的updaterCacheDirName值一致，在windows中会创建一个类似
+// C:\Users\Administrator\AppData\Local\electron-updater1\pending文件存储更新下载后的文件&quot;*.exe&quot;和&quot;update-info.json&quot;
+let updaterCacheDirName = 'electron-updater1'
+const updatePendingPath = path.join(autoUpdater.app.baseCachePath, updaterCacheDirName, 'pending')
+log.warn(updatePendingPath)
+fs.emptyDir(updatePendingPath)
+log.warn(autoUpdater.app.baseCachePath)
+//= =================================================================================================================
+const message = {
+    error: '检查更新出错',
+    checking: '正在检查更新……',
+    updateAva: '检测到新版本，正在下载……',
+    updateNotAva: '现在使用的就是最新版本，不用更新'
+  }
+  // 设置是否自动下载，默认是true,当点击检测到新版本时，会自动下载安装包，所以设置为false
+  autoUpdater.autoDownload = false
+  autoUpdater.logger = log
+  // https://github.com/electron-userland/electron-builder/issues/1254
+  if (process.env.NODE_ENV === 'development') {
+    autoUpdater.updateConfigPath = path.join(__dirname, 'default-app-update.yml')
+  } else {
+    autoUpdater.updateConfigPath = path.join(__dirname, '../../../app-update.yml')
+  }
+  autoUpdater.setFeedURL(updateURL)
+  autoUpdater.on('error', function () {
+    mainWindow.webContents.send(message.error)
+  })
+  autoUpdater.on('checking-for-update', function () {
+    mainWindow.webContents.send(message.checking)
+  })
+  autoUpdater.on('update-available', function (info) {
+    mainWindow.webContents.send(message.updateAva)
+  })
+  autoUpdater.on('update-not-available', function (info) {
+    mainWindow.webContents.send(message.updateNotAva)
+  })
+
+  // 更新下载进度事件
+  autoUpdater.on('download-progress', function (progressObj) {
+    log.warn('触发下载。。。')
+    console.log(progressObj)
+    log.warn(progressObj)
+    mainWindow.webContents.send('downloadProgress', progressObj)
+  })
+  autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateUrl, quitAndUpdate) {
+    ipcMain.on('isUpdateNow', (e, arg) =&gt; {
+      log.warn('开始更新')
+      autoUpdater.quitAndInstall()
+      mainWindow.destroy()
+      // callback()
+    })
+    mainWindow.webContents.send('isUpdateNow')
+  })
+
+  ipcMain.on('checkForUpdate', () =&gt; {
+    // 执行自动更新检查
+    log.warn('执行自动更新检查')
+    log.warn(__dirname)
+    autoUpdater.checkForUpdates()
+  })
+
+  ipcMain.on('downloadUpdate', () =&gt; {
+    // 下载
+    log.warn('执行下载')
+    autoUpdater.downloadUpdate()
+  })
+}
+</code></pre>
+<p>说明：更新过程中出现以下问题：<br>
+问题1：Error: TypeError: this.app.whenReady is not a function<br>
+问题分析：electron 2.0.4不支持此方法，electron 3+后才支持此方法，所以升级electron为^3.0.0</p>
+<p>问题2：无法触发更新，控制台提示Update for version 3.1.13 is not available (latest version: 0.0.2, downgrade is disallowed)</p>
+<p>问题分析：查看electron-updater模块下out/appUpdater.js中找到次错误处507行，发现isUpdateAvailable函数返回为false,isUpdateAvailable函数代码：</p>
+<pre><code>  async isUpdateAvailable(updateInfo) {
+  const latestVersion = (0, _semver().parse)(updateInfo.version);
+
+  if (latestVersion == null) {
+    throw (0, _builderUtilRuntime().newError)(`This file could not be downloaded, or the latest version (from update server) does not have a valid semver version: &quot;${latestVersion}&quot;`, &quot;ERR_UPDATER_INVALID_VERSION&quot;);
+  }
+
+  const currentVersion = this.currentVersion;
+
+  if ((0, _semver().eq)(latestVersion, currentVersion)) {
+    return false;
+  }
+
+  const isStagingMatch = await this.isStagingMatch(updateInfo);
+
+  if (!isStagingMatch) {
+    return false;
+  } // https://github.com/electron-userland/electron-builder/pull/3111#issuecomment-405033227
+  // https://github.com/electron-userland/electron-builder/pull/3111#issuecomment-405030797
+
+
+  const isLatestVersionNewer = (0, _semver().gt)(latestVersion, currentVersion);
+
+  if (!this.allowDowngrade) {
+    return isLatestVersionNewer;
+  }
+
+  const currentVersionPrereleaseComponent = (0, _semver().prerelease)(currentVersion);
+  const latestVersionPrereleaseComponent = (0, _semver().prerelease)(latestVersion);
+
+  if (currentVersionPrereleaseComponent === latestVersionPrereleaseComponent) {
+    // allowDowngrade taken in account only if channel differs
+    return isLatestVersionNewer;
+  }
+
+  return true;
+}
+</code></pre>
+<p>关键在于 const isStagingMatch = await this.isStagingMatch(updateInfo);这里返回的是false，导致无法更新，分别打印latestVersion和currentVersion发现latestVersion的值是最新安装包程序所对应的版本，而currentVersion却是electron的版本3.1.13，搜索全文发现在package-lock.json中发现electron的版本是3.1.13，所以在这里可以看出有两种解决方式，一种就是直接在package.json中修改程序的新版本大于3.1.13，另一种则是修改electron-updater中appUpdater.js中isUpdateAvailable函数代码</p>
+<pre><code>const pkg=require('../../../package.json')
+const isLatestVersionNewer = (0, _semver().gt)(latestVersion, pkg.version);
+</code></pre>
+<p>分析代码</p>
+<pre><code>//这段代码获取当前版本
+if (app == null) {
+    this.app = new (_ElectronAppAdapter().ElectronAppAdapter)();
+    this.httpExecutor = new (_electronHttpExecutor().ElectronHttpExecutor)((authInfo, callback) =&gt; this.emit(&quot;login&quot;, authInfo, callback));
+  } else {
+    this.app = app;
+    this.httpExecutor = null;
+  }
+
+....ElectronAppAdapter.d.ts
+import { AppAdapter } from &quot;./AppAdapter&quot;;
+export declare class ElectronAppAdapter implements AppAdapter {
+    private readonly app;
+    constructor(app?: Electron.App);
+    whenReady(): Promise&lt;void&gt;;
+    readonly version: string;
+    readonly name: string;
+    readonly isPackaged: boolean;
+    readonly appUpdateConfigPath: string;
+    readonly userDataPath: string;
+    readonly baseCachePath: string;
+    quit(): void;
+    onQuit(handler: (exitCode: number) =&gt; void): void;
+}
+</code></pre>
+<p>问题4：出现UnhandledPromiseRejectionWarning: Error: ENOENT, dev-app-update.yml not found in D:\hzhh123\workspace\vue-work\electron-demo1\node_modules\electron\dist\resources\default_app.asar<br>
+问题描述：dev-app-update.yml文件不存在<br>
+问题分析：dev-app-update.yml文件没有打包到default_app.asar中，dev-app-update.yml的格式是怎样的，查看打包后的文件win-unpacked\resources，发现其中一个app-update.yml文件，查阅资料后发现其实dev-app-update.yml的文件内容格式是一样的，那么直接设置成一样的内容</p>
+<pre><code>  provider: generic
+  url: 'http://127.0.0.1:8090/demo/'
+  updaterCacheDirName: electron-demo1-updater
+</code></pre>
+<p>可以发现里面的url就是安装包升级的url,updaterCacheDirName是更新时保存下载文件所用的缓存地址，组成格式是应用名称加-updater,这个目录结构在windows下一般如下：</p>
+<pre><code>C:\Users\Administrator\AppData\Local\-electron-demo1-updater\pending
+</code></pre>
+<p>所以调试的时候可以建一个default-app.yml文件放在D:\hzhh123\workspace\vue-work\electron-demo1\node_modules\electron\dist\resources\default_app.asar 下，这里就涉及到asar解压缩，但是这样会很麻烦，打包后也需要这样替换，麻烦，所幸electron-updater中提供了这个文件的属性配置updateConfigPath，可以通过设置这个属性来解决这个问题</p>
+<pre><code>if (process.env.NODE_ENV === 'development') {
+  autoUpdater.updateConfigPath = path.join(__dirname, 'default-app-update.yml')
+} else {
+  autoUpdater.updateConfigPath = path.join(__dirname, '../../../app-update.yml')
+}
+</code></pre>
+<p>参考https://github.com/electron-userland/electron-builder/issues/1254</p>
+<h3 id="265-%E6%B8%B2%E6%9F%93%E6%9B%B4%E6%96%B0%E8%BF%9B%E7%A8%8B">2.6.5 渲染更新进程</h3>
+<h4 id="2651-%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%BB%84%E4%BB%B6%E6%A8%A1%E6%9D%BFcomponentsupdateindexvue">2.6.5.1 新建一个组件模板components/update/index.vue</h4>
+<pre><code>&lt;template&gt;
+  &lt;div class=&quot;app-container&quot;&gt;
+    &lt;el-dialog
+      :title=&quot;title&quot;
+      :visible.sync=&quot;centerDialogVisible&quot;
+      width=&quot;40%&quot; 
+      :close-on-click-modal=&quot;false&quot; 
+      :close-on-press-escape=&quot;false&quot;	 
+      center&gt;
+      &lt;span&gt;{{ remark }}&lt;/span&gt;
+      &lt;span slot=&quot;footer&quot; class=&quot;dialog-footer&quot;&gt;
+        &lt;el-button size=&quot;small&quot; type=&quot;primary&quot; @click=&quot;updateApp&quot;&gt;立即升级&lt;/el-button&gt;
+        &lt;el-button size=&quot;small&quot; @click=&quot;centerDialogVisible = false&quot;&gt;取 消&lt;/el-button&gt;
+      &lt;/span&gt;
+    &lt;/el-dialog&gt;
+    &lt;el-dialog
+      :visible.sync=&quot;downloadDialogVisible&quot;
+      :show-close=&quot;false&quot; 
+      :close-on-click-modal=&quot;false&quot; 
+      :close-on-press-escape=&quot;false&quot;  
+      title=&quot;下载进度&quot;
+      width=&quot;30%&quot;
+      &gt;
+      &lt;div style=&quot;text-align:center&quot;&gt;
+          &lt;el-progress type=&quot;circle&quot; :percentage=&quot;downloadPercent&quot;&gt;&lt;/el-progress&gt;
+      &lt;/div&gt;
+    &lt;/el-dialog&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { ipcRenderer } from 'electron'
+export default {
+  props: {
+    centerDialogVisible: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data () {
+    return {
+      downloadPercent: '',
+      // centerDialogVisible: false,
+      downloadDialogVisible: false,
+      title: '最新版本3.3.1',//titile和remark需要使用axios方法远程去调用才行，这里只是做测试使用，所以这两个值是写固定的
+      remark: '需要注意的是内容是默认不居中的'
+    }
+  },
+  mounted () {
+    this.checkForUpdate()
+  },
+  methods: {
+    updateApp () {
+      this.centerDialogVisible = false
+      this.downloadDialogVisible = true
+      this.downloadUpdate()
+    },
+    checkForUpdate () {
+      ipcRenderer.send('checkForUpdate')
+    },
+    downloadUpdate () {
+      ipcRenderer.send('downloadUpdate')
+      // 注意：&quot;downloadProgress”事件可能存在无法触发的问题，只需要限制一下下载网速就好了
+      ipcRenderer.on('downloadProgress', (event, progressObj) =&gt; {
+        console.log(progressObj)
+        this.downloadPercent = Math.trunc(progressObj.percent) || 0
+        // this.downloadPercent = progressObj.percent.toFixed(2) || 0
+        console.log(Math.trunc(this.downloadPercent))
+        console.log(Math.trunc(this.downloadPercent) === 100)
+        if (Math.trunc(this.downloadPercent) === 100) {
+          console.log('开始更新...')
+          ipcRenderer.on('isUpdateNow', function () {
+            ipcRenderer.send('isUpdateNow')
+          })
+        }
+      })
+    }
+  },
+  destroyed () {
+    // ipcRenderer.removeAll(['message', 'downloadProgress'])
+  }
+}
+&lt;/script&gt;
+</code></pre>
+<h4 id="2652-%E8%B0%83%E7%94%A8">2.6.5.2 调用</h4>
+<p>一般在首页调用这个组件</p>
+<pre><code>&lt;template&gt;
+  &lt;div id=&quot;wrapper&quot;&gt;
+    &lt;img id=&quot;logo&quot; src=&quot;~@/assets/logo.png&quot; alt=&quot;electron-vue&quot;&gt;
+    &lt;main&gt;
+      &lt;div class=&quot;left-side&quot;&gt;
+        &lt;span class=&quot;title&quot;&gt;
+          Welcome to your new project!
+        &lt;/span&gt;
+        &lt;system-information&gt;&lt;/system-information&gt;
+        &lt;update-version :centerDialogVisible=&quot;centerDialogVisible&quot;&gt;&lt;/update-version&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;right-side&quot;&gt;
+        &lt;div class=&quot;doc&quot;&gt;
+          &lt;div class=&quot;title&quot;&gt;Getting Started&lt;/div&gt;
+          &lt;p&gt;
+            electron-vue comes packed with detailed documentation that covers everything from
+            internal configurations, using the project structure, building your application,
+            and so much more.
+          &lt;/p&gt;
+          &lt;button @click=&quot;open('https://simulatedgreg.gitbooks.io/electron-vue/content/')&quot;&gt;Read the Docs&lt;/button&gt;&lt;br&gt;&lt;br&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;doc&quot;&gt;
+          &lt;div class=&quot;title alt&quot;&gt;Other Documentation&lt;/div&gt;
+          &lt;button class=&quot;alt&quot; @click=&quot;open('https://electron.atom.io/docs/')&quot;&gt;Electron&lt;/button&gt;
+          &lt;button class=&quot;alt&quot; @click=&quot;open('https://vuejs.org/v2/guide/')&quot;&gt;Vue.js&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/main&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  import SystemInformation from './LandingPage/SystemInformation'
+  import UpdateVersion from '@/components/update'
+  export default {
+    name: 'landing-page',
+    data () {
+      return {
+        centerDialogVisible: true
+      }
+    },
+    components: { SystemInformation, UpdateVersion },
+    methods: {
+      open (link) {
+        this.$electron.shell.openExternal(link)
+      }
+    }
+  }
+&lt;/script&gt;
+
+&lt;style&gt;
+  @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body { font-family: 'Source Sans Pro', sans-serif; }
+
+  #wrapper {
+    background:
+      radial-gradient(
+        ellipse at top left,
+        rgba(255, 255, 255, 1) 40%,
+        rgba(229, 229, 229, .9) 100%
+      );
+    height: 100vh;
+    padding: 60px 80px;
+    width: 100vw;
+  }
+
+  #logo {
+    height: auto;
+    margin-bottom: 20px;
+    width: 420px;
+  }
+
+  main {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  main &gt; div { flex-basis: 50%; }
+
+  .left-side {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .welcome {
+    color: #555;
+    font-size: 23px;
+    margin-bottom: 10px;
+  }
+
+  .title {
+    color: #2c3e50;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+
+  .title.alt {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .doc p {
+    color: black;
+    margin-bottom: 10px;
+  }
+
+  .doc button {
+    font-size: .8em;
+    cursor: pointer;
+    outline: none;
+    padding: 0.75em 2em;
+    border-radius: 2em;
+    display: inline-block;
+    color: #fff;
+    background-color: #4fc08d;
+    transition: all 0.15s ease;
+    box-sizing: border-box;
+    border: 1px solid #4fc08d;
+  }
+
+  .doc button.alt {
+    color: #42b983;
+    background-color: transparent;
+  }
+&lt;/style&gt;
+</code></pre>
+<p>最终截图：</p>
+<p><img src="img/2019-08-29_165425.png" alt="2019-08-29_165425.png"></p>
+<p>问题：每次只要下载后但是我不更新，我下次更新时就不起作用了
+问题分析：在updaterCacheDirName目录中如果存在上次下载的安装包，下次安装时会检测安装包已存在，但是无法进行调用更新，我的解决方法是检测到有新版本时直接将其删除，然后再下载就可以了</p>
+<pre><code>  //= ==============================================================================================================
+  //                            清除每次更新下载的文件，否则无法进行更新
+  //= ==============================================================================================================
+  // updaterCacheDirName的值与src/main/app-update.yml中的updaterCacheDirName值一致，在windows中会创建一个类似
+  // C:\Users\Administrator\AppData\Local\electron-updater1\pending文件存储更新下载后的文件&quot;*.exe&quot;和&quot;update-info.json&quot;
+  let updaterCacheDirName = 'electron-updater1'
+  const updatePendingPath = path.join(autoUpdater.app.baseCachePath, updaterCacheDirName, 'pending')
+  log.warn(updatePendingPath)
+  fs.emptyDir(updatePendingPath)
+  log.warn(autoUpdater.app.baseCachePath)
+</code></pre>
+<h2 id="27-asar%E8%A7%A3%E5%8E%8B%E7%BC%A9">2.7 asar解压缩</h2>
+<p>安装asar</p>
+<pre><code>npm install -g asar
+</code></pre>
+<p>解压</p>
+<pre><code>asar extract 压缩文件  解压文件夹
+</code></pre>
+<p>压缩：如果压缩文件存在，则会被替换</p>
+<pre><code>asar pack 文件夹  压缩文件名
+</code></pre>
+<h2 id="28-%E5%AE%8C%E6%95%B4%E7%9A%84%E4%BB%A3%E7%A0%81">2.8 完整的代码</h2>
+<p><a href="https://gitee.com/hzhh123/electron-demo1.git">https://gitee.com/hzhh123/electron-demo1.git</a></p>
+<h2 id="29-electron-log%E6%97%A5%E5%BF%97">2.9 electron-log日志</h2>
+<p>一开始搞更新的时候主进程是如何执行的无法看到，后来看苏南大叔的<a href="https://newsn.net/say/electron-log.html">https://newsn.net/say/electron-log.html</a>后加入了日志调试才能看出问题</p>
+<pre><code>&quot;electron-log&quot;: &quot;^2.2.17&quot;
+</code></pre>
+<p>主进程中配置electron-log</p>
+<pre><code>var log = require('electron-log')
+log.transports.console.level = false
+log.transports.console.level = 'silly'
+</code></pre>
+<h2 id="210-webapcek4%E6%89%93%E5%8C%85%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E5%87%BA%E7%8E%B0%E6%89%BE%E4%B8%8D%E5%88%B0%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B%E6%89%BE%E4%B8%8D%E5%88%B0%E6%96%87%E4%BB%B6">2.10 webapcek4打包静态资源出现找不到渲染进程找不到文件</h2>
+<p>一般是文件路径问题，配置publicPath和outputPath属性，limit属性是超过10k的图片资源就不会转化为base64编码，否则转化为base64编码</p>
+<pre><code> {
+    test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+    use: {
+      loader: 'url-loader',
+      options:{
+        limit: 10000,
+        name: 'imgs/[name]--[folder].[ext]',
+        publicPath:'../',
+        outputPath:'/'
+      }
+    }
+  },</code></pre>
+
+</body>
+</html>
