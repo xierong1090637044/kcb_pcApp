@@ -20,7 +20,7 @@ log.transports.console.level = 'silly'
 const os = require('os')
 if (os.platform() === 'win32') {
   console.log('win32')
-  app.setAppUserModelId('com.electron.electron-demo1')
+  app.setAppUserModelId('com.electron.KcbManage')
 }
 console.log(app.getAppPath())
 /**

@@ -1,4 +1,4 @@
-# electron-demo1
+# KcbManage
 
 #### Description
 electron-updater更新electron应用

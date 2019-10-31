@@ -224,19 +224,19 @@
     }
 
   
-  问题4：出现UnhandledPromiseRejectionWarning: Error: ENOENT, dev-app-update.yml not found in D:\hzhh123\workspace\vue-work\electron-demo1\node_modules\electron\dist\resources\default_app.asar   
+  问题4：出现UnhandledPromiseRejectionWarning: Error: ENOENT, dev-app-update.yml not found in D:\hzhh123\workspace\vue-work\KcbManage\node_modules\electron\dist\resources\default_app.asar   
   问题描述：dev-app-update.yml文件不存在  
   问题分析：dev-app-update.yml文件没有打包到default_app.asar中，dev-app-update.yml的格式是怎样的，查看打包后的文件win-unpacked\resources，发现其中一个app-update.yml文件，查阅资料后发现其实dev-app-update.yml的文件内容格式是一样的，那么直接设置成一样的内容  
 
       provider: generic
       url: 'http://127.0.0.1:8090/demo/'
-      updaterCacheDirName: electron-demo1-updater
+      updaterCacheDirName: KcbManage-updater
 
 可以发现里面的url就是安装包升级的url,updaterCacheDirName是更新时保存下载文件所用的缓存地址，组成格式是应用名称加-updater,这个目录结构在windows下一般如下：
 
-    C:\Users\Administrator\AppData\Local\-electron-demo1-updater\pending
+    C:\Users\Administrator\AppData\Local\-KcbManage-updater\pending
     
-所以调试的时候可以建一个default-app.yml文件放在D:\hzhh123\workspace\vue-work\electron-demo1\node_modules\electron\dist\resources\default_app.asar 下，这里就涉及到asar解压缩，但是这样会很麻烦，打包后也需要这样替换，麻烦，所幸electron-updater中提供了这个文件的属性配置updateConfigPath，可以通过设置这个属性来解决这个问题  
+所以调试的时候可以建一个default-app.yml文件放在D:\hzhh123\workspace\vue-work\KcbManage\node_modules\electron\dist\resources\default_app.asar 下，这里就涉及到asar解压缩，但是这样会很麻烦，打包后也需要这样替换，麻烦，所幸electron-updater中提供了这个文件的属性配置updateConfigPath，可以通过设置这个属性来解决这个问题  
 
     if (process.env.NODE_ENV === 'development') {
       autoUpdater.updateConfigPath = path.join(__dirname, 'default-app-update.yml')
@@ -502,7 +502,7 @@
     asar pack 文件夹  压缩文件名
   
 ## 2.8 完整的代码
-[https://gitee.com/hzhh123/electron-demo1.git](https://gitee.com/hzhh123/electron-demo1.git)
+[https://gitee.com/hzhh123/KcbManage.git](https://gitee.com/hzhh123/KcbManage.git)
 
 ## 2.9 electron-log日志
   一开始搞更新的时候主进程是如何执行的无法看到，后来看苏南大叔的[https://newsn.net/say/electron-log.html](https://newsn.net/say/electron-log.html)后加入了日志调试才能看出问题
@@ -550,7 +550,7 @@
         <title>Title</title>
     </head>
     <body>
-    <a class="protocol" href="electron-demo1://open"><h3>electron-demo1://open</h3></a>
+    <a class="protocol" href="KcbManage://open"><h3>KcbManage://open</h3></a>
     </body>
     </html>
 
@@ -562,10 +562,10 @@
      */
     if (process.defaultApp) {
       if (process.argv.length >= 2) {
-        app.setAsDefaultProtocolClient('electron-demo1', process.execPath, [path.resolve(process.argv[1])])
+        app.setAsDefaultProtocolClient('KcbManage', process.execPath, [path.resolve(process.argv[1])])
       }
     } else {
-      app.setAsDefaultProtocolClient('electron-demo1')
+      app.setAsDefaultProtocolClient('KcbManage')
     }
     
     app.on('open-url', (event, url) => {

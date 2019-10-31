@@ -17,7 +17,7 @@ export default class Notify extends Events {
     }
     this.close()
     this.$notify = new Notification({
-      title: 'electron-demo1',
+      title: 'KcbManage',
       body,
       icon: logo
     })

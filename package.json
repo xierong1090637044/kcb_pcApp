@@ -1,5 +1,5 @@
 {
-  "name": "库存管理系统",
+  "name": "KcbManage",
   "version": "0.0.1",
   "author": "1550969323@qq.com <1550969323@qq.com>",
   "description": "An electron-vue project",
@@ -22,8 +22,8 @@
     "postinstall": "npm run lint:fix"
   },
   "build": {
-    "productName": "库存管理系统",
-    "appId": "com.electron.electron-demo1",
+    "productName": "KcbManage",
+    "appId": "com.electron.KcbManage",
     "directories": {
       "output": "build"
     },

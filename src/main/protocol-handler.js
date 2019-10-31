@@ -5,10 +5,10 @@ const path = require('path')
  */
 if (process.defaultApp) {
   if (process.argv.length >= 2) {
-    app.setAsDefaultProtocolClient('electron-demo1', process.execPath, [path.resolve(process.argv[1])])
+    app.setAsDefaultProtocolClient('KcbManage', process.execPath, [path.resolve(process.argv[1])])
   }
 } else {
-  app.setAsDefaultProtocolClient('electron-demo1')
+  app.setAsDefaultProtocolClient('KcbManage')
 }
 
 app.on('open-url', (event, url) => {
