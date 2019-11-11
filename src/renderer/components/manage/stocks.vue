@@ -35,7 +35,7 @@
 		<Modal v-model="modal2" width="360">
 			<p slot="header" style="color:#f60;text-align:center">
 				<Icon type="ios-information-circle"></Icon>
-				<span>确定删除此分类</span>
+				<span>确定删除此仓库</span>
 			</p>
 			<div style="text-align:center">
 				<p>删除后将无法恢复</p>
@@ -107,8 +107,26 @@
 						align: 'center'
 					},
 					{
-						title: '仓库Id',
-						key: 'objectId',
+						title: '仓库图片',
+						key: 'Image',
+						width: 140,
+						render: (h, params) => {
+							return h('div', {
+								style: {
+									"text-align": "center"
+								},
+							}, [
+								h('img', {
+									style: {
+										height: "100px",
+										padding:"4px 0",
+									},
+									attrs: {
+										src: params.row.Image[0]
+									}
+								})
+							]);
+						}
 					},
 					{
 						title: '仓库名字',

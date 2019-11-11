@@ -36,8 +36,7 @@
 					</div>
 					<div class="layout-nav">
 						<MenuItem name="3">
-						<Icon type="ios-log-out" size="24" />
-						退出登录
+						<Icon type="ios-log-out" size="24" />退出登录
 						</MenuItem>
 
 						<MenuItem name="4">

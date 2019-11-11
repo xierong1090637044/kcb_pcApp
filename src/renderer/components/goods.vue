@@ -1,66 +1,68 @@
 <template>
 	<div>
 		<div style="margin-bottom: 10px;">
-			<Breadcrumb  separator="<b style='color: #999;'>/</b>">
+			<Breadcrumb separator="<b style='color: #999;'>/</b>">
 				<BreadcrumbItem to="/">首页</BreadcrumbItem>
-				<BreadcrumbItem  to="/home/goods">产品管理</BreadcrumbItem>
+				<BreadcrumbItem to="/home/goods">产品管理</BreadcrumbItem>
 			</Breadcrumb>
 		</div>
-		
+
 		<div style="margin-bottom: 10px;display: flex;align-items: center;justify-content: space-between;">
 
 			<div style="display: flex;align-items: center;">
-				<Dropdown style="margin-right: 10px" @on-click="selected_options">
+				<Dropdown style="margin-right: 10px" @on-click="selected_options" trigger="click" >
 					<Button type="primary">
-						选择操作
+						打印操作
 						<Icon type="ios-arrow-down"></Icon>
 					</Button>
 					<DropdownMenu slot="list">
-						<DropdownItem name="出库">
-							<Button type="primary" long> 出库</Button>
-						</DropdownItem>
-						<DropdownItem name="入库">
-							<Button type="primary" long> 入库</Button>
-						</DropdownItem>
-						<DropdownItem name="盘点">
-							<Button type="primary" long> 盘点</Button>
-						</DropdownItem>
-						<DropdownItem name="退货">
-							<Button type="primary" long> 退货</Button>
-						</DropdownItem>
 						<DropdownItem name="打印">
 							<Button type="primary" long v-print="'#print_selectedqr'"> 打印选中商品的二维码</Button>
+						</DropdownItem>
+						<DropdownItem name="批量打印当前页面二维码">
+							<Button type="primary" long v-print="'#print_allqr'"> 批量打印当前页面二维码</Button>
 						</DropdownItem>
 					</DropdownMenu>
 				</Dropdown>
 
-				<router-link to="/home/add_good">
-					<Button type="success" style="margin-right: 10px;" icon="md-add">添加产品</Button>
-				</router-link>
+				<Dropdown style="margin-right: 10px" trigger="click" >
+					<Button type="primary">
+						产品操作
+						<Icon type="ios-arrow-down"></Icon>
+					</Button>
+					<DropdownMenu slot="list">
+						<DropdownItem name="添加产品">
+							<Button type="primary" long style="margin-right: 10px;" @click="addProduct">添加产品</Button>
+						</DropdownItem>
+						<DropdownItem name="删除">
+							<Button type="primary" long @click="delete_good()" style="margin-right: 10px;">删除</Button>
+						</DropdownItem>
+					</DropdownMenu>
+				</Dropdown>
 
-				<Button type="warning" @click="delete_good()" icon="ios-trash-outline" style="margin-right: 10px;">删除</Button>
+				<Dropdown style="margin-right: 10px" trigger="click" >
+					<Button type="primary">
+						导入导出操作
+						<Icon type="ios-arrow-down"></Icon>
+					</Button>
+					<DropdownMenu slot="list">
+						<DropdownItem name="下载导入产品数据样本">
+							<Button type="primary" @click="download_demo()" long> 下载导入产品数据样本</Button>
+						</DropdownItem>
+						<DropdownItem name="导出产品数据">
+							<Button type="primary" @click="exportData()" long> 导出产品数据</Button>
+						</DropdownItem>
+						<DropdownItem name="上传Excel表格数据">
+							<input class="input-file" type="file" @change="importfile" accept=".csv,.excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+							 style="display: none;" />
+							<Button type="primary" @click="btnClick" long>上传Excel表格数据(一次最多50条数据)</Button>
+						</DropdownItem>
+					</DropdownMenu>
+				</Dropdown>
 
 				<Button type="error" @click="modal1=true" icon="ios-funnel-outline">筛选</Button>
 			</div>
-
-			<div style="display: flex;align-items: center;">
-				<Button type="primary" @click="exportData()" icon="ios-download-outline"> 导出产品数据</Button>
-
-				<Button type="primary" icon="ios-download-outline" style="margin-left: 10px;" v-print="'#print_allqr'">
-					批量打印当前页面二维码</Button>
-
-				<Button type="primary" @click="download_demo()" icon="ios-download-outline" style="margin-left: 10px;">
-					下载导入产品数据样本</Button>
-
-				<div style="margin-left:10px">
-					<input class="input-file" type="file" @change="importfile" accept=".csv,.excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-					 style="display: none;" />
-					<Button type="primary" @click="btnClick" icon="ios-cloud-upload-outline">上传Excel表格数据(一次最多50条数据)</Button>
-				</div>
-			</div>
 		</div>
-
-
 
 		<Table :columns="columns" :data="goods" :loading="loading" ref="table" border size="small" :height="screenHeight - 240"
 		 @on-select="get_select" @on-select-cancel="cancle_select" @on-select-all-cancel="cancle_select" id="print_table">
@@ -75,7 +77,7 @@
 			</div>
 		</div>
 
-		<Modal v-model="modal1" title="筛选" @on-ok="modal_confrim" @on-cancel="cancel" cancel-text="重置">
+		<Modal v-model="modal1" title="筛选" @on-ok="modal_confrim" @on-cancel="cancel" cancel-text="重置" :closable=false>
 			<Form :label-width="80">
 				<FormItem label="产品名字">
 					<Input v-model="search_goodMame" placeholder="请输入产品名字"></Input>
@@ -166,8 +168,11 @@
 				<img :src="item.qrcodeImg" style="width: 80px;" />
 				<div style="color: #333;margin-top: 10px;"><text style="font-size: 10px;">{{item.goodsName}}</text></div>
 			</div>
-
 		</div>
+
+		<Modal title="产品图片" v-model="GoodImg.show" class-name="vertical-center-modal">
+			<img :src="GoodImg.attr" style="height: 800px;margin: 0 auto;width: 100%;" />
+		</Modal>
 
 	</div>
 </template>
@@ -185,6 +190,10 @@
 		components: {},
 		data() {
 			return {
+				GoodImg: {
+					show: false,
+					attr: ''
+				},
 				modal2: {
 					all_money: 0,
 					real_money: 0,
@@ -210,6 +219,7 @@
 				padding_size: 30,
 				modal1: false,
 				userid: JSON.parse(localStorage.getItem('bmob')).objectId || '',
+				user: JSON.parse(localStorage.getItem('bmob')),
 				all_stocks: [],
 				page_size: 50,
 				pege_number: 1,
@@ -239,11 +249,17 @@
 							}, [
 								h('img', {
 									style: {
-										height: "100px",
-										padding:"4px 0",
+										width: '60px',
+										padding: "4px 0",
 									},
 									attrs: {
 										src: params.row.goodsIcon
+									},
+									on: {
+										'click': function() {
+											that.GoodImg.show = true
+											that.GoodImg.attr = params.row.goodsIcon
+										}
 									}
 								})
 							]);
@@ -406,6 +422,26 @@
 
 		methods: {
 
+			//添加产品
+			addProduct() {
+				if (that.user.is_vip) {
+					this.$router.push({
+						path: '/home/add_good'
+					})
+				} else {
+					if (that.goods.length >= 30) {
+						this.$Message['error']({
+							background: true,
+							content: '非会员只能上传30条'
+						});
+					} else {
+						this.$router.push({
+							path: 'goods/addgood'
+						})
+					}
+				}
+			},
+
 			//输入实际的出入库的价格
 			modify_price($event, index) {
 				//console.log($event, index)
@@ -490,6 +526,7 @@
 			},
 
 			delete_good() {
+
 				if (that.select_goods.length == 0) {
 					this.$Message.error('当前没有选择产品');
 				} else {
@@ -502,7 +539,13 @@
 			},
 
 			btnClick() {
-				document.querySelector('.input-file').click();
+				console.log(that.user);
+				if (that.user.is_vip) {
+					document.querySelector('.input-file').click();
+				} else {
+					return
+				}
+
 			},
 
 			importfile(event) {
@@ -606,10 +649,11 @@
 				query.find().then(res => {
 					console.log(res);
 					for (let item of res) {
-						item.class = (item.goodsClass ? (item.goodsClass.class_text || "") : "") + "    " + (item.second_class ?(item.second_class.class_text || "") : "")
+						item.class = (item.goodsClass ? (item.goodsClass.class_text || "") : "") + "    " + (item.second_class ? (item.second_class
+							.class_text || "") : "")
 						item.stocks = (item.stocks) ? item.stocks.stock_name : ""
 
-						item.qrcodeImg = jrQrcode.getQrBase64((item.productCode) ? item.productCode : item.objectId + '-' +false)
+						item.qrcodeImg = jrQrcode.getQrBase64((item.productCode) ? item.productCode : item.objectId + '-' + false)
 						item.productCode = (item.productCode) ? item.productCode : item.objectId + '-' + false
 					}
 					this.goods = res;
@@ -627,7 +671,7 @@
 			display: none
 		}
 	}
-	
+
 	.display_flex {
 		display: flex;
 		align-items: center;
@@ -637,5 +681,16 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+	}
+
+	.vertical-center-modal {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+
+		.ivu-modal {
+			top: 0;
+		}
 	}
 </style>

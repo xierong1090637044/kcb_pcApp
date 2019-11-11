@@ -1,12 +1,12 @@
 <template>
 	<div>
 		<div style="margin-bottom: 10px;">
-			<Breadcrumb  separator="<b style='color: #999;'>/</b>">
+			<Breadcrumb separator="<b style='color: #999;'>/</b>">
 				<BreadcrumbItem to="/">首页</BreadcrumbItem>
-				<BreadcrumbItem  to="/home/goods">操作记录</BreadcrumbItem>
+				<BreadcrumbItem to="/home/goods">操作记录</BreadcrumbItem>
 			</Breadcrumb>
 		</div>
-		
+
 		<div style="display: flex;align-items: center;margin-bottom: 20px;">
 			<Dropdown style="margin-right: 10px" @on-click="selected_options">
 				<Button type="primary">
@@ -14,7 +14,7 @@
 					<Icon type="ios-arrow-down"></Icon>
 				</Button>
 				<DropdownMenu slot="list">
-					<DropdownItem name="0">全部恶趣味 </DropdownItem>
+					<DropdownItem name="0">全部</DropdownItem>
 					<DropdownItem name="-1">出库</DropdownItem>
 					<DropdownItem name="1">入库</DropdownItem>
 					<DropdownItem name="2">退货</DropdownItem>
@@ -38,12 +38,12 @@
 
 		<Modal v-model="modal1" title="筛选" @on-ok="modal_confrim" @on-cancel="cancel" cancel-text="重置">
 			<Form :label-width="80">
-				
+
 				<FormItem label="请选择时间">
 					<DatePicker type="date" placeholder="选择起始时间" style="width: 200px" @on-change="change_startdata" v-model="start_time"></DatePicker>
 					<DatePicker type="date" placeholder=" 选择结束时间" style="width: 200px" @on-change="change_enddata" v-model="end_time"></DatePicker>
 				</FormItem>
-				
+
 
 				<FormItem label="请选择客户" v-if="type == -1" style="margin-top: 10px;">
 					<router-link to="/home/manage/customs?type=choose">
@@ -127,6 +127,8 @@
 							return h('div', ["入库"]);
 						} else if (params.row.type == -1) {
 							return h('div', ["出库"]);
+						} else if (params.row.type == -2) {
+							return h('div', ["调拨"]);
 						} else if (params.row.type == 2) {
 							return h('div', ["退货"]);
 						} else if (params.row.type == 3) {
@@ -197,6 +199,8 @@
 								return h('div', ["入库"]);
 							} else if (params.row.type == -1) {
 								return h('div', ["出库"]);
+							} else if (params.row.type == -2) {
+								return h('div', ["调拨"]);
 							} else if (params.row.type == 2) {
 								return h('div', ["退货"]);
 							} else if (params.row.type == 3) {
@@ -248,16 +252,16 @@
 
 			//选择起始时间
 			change_startdata(e) {
-				if(e){
-					that.start_time = e+" 00:00:00"
+				if (e) {
+					that.start_time = e + " 00:00:00"
 				}
-				
+
 			},
 
 			//选择结束时间
 			change_enddata(e) {
-				if(e){
-					that.end_time = e+" 00:00:00"
+				if (e) {
+					that.end_time = e + " 00:00:00"
 				}
 			},
 
@@ -274,7 +278,7 @@
 			cancel() {
 				that.select_custom = ''
 				localStorage.removeItem("select_custom")
-				that.start_time =''
+				that.start_time = ''
 				that.end_time = ''
 				if (that.type == 0) {
 					that.get_operations();
@@ -333,11 +337,11 @@
 			get_operations() {
 				const query = Bmob.Query('order_opreations');
 				query.equalTo('master', '==', that.userid);
-				if(that.start_time){
-					query.equalTo("createdAt", ">",that.start_time);
+				if (that.start_time) {
+					query.equalTo("createdAt", ">", that.start_time);
 				}
-				if(that.end_time){
-					query.equalTo("createdAt", "<" ,that.end_time);
+				if (that.end_time) {
+					query.equalTo("createdAt", "<", that.end_time);
 				}
 				query.include("opreater", "custom", "producer");
 				query.limit(that.page_size);
@@ -355,11 +359,11 @@
 				const query = Bmob.Query('Bills');
 				query.equalTo('userId', '==', that.userid);
 				query.equalTo('type', '==', that.type);
-				if(that.start_time){
-					query.equalTo("createdAt", ">",that.start_time);
+				if (that.start_time) {
+					query.equalTo("createdAt", ">", that.start_time);
 				}
-				if(that.end_time){
-					query.equalTo("createdAt", "<" ,that.end_time);
+				if (that.end_time) {
+					query.equalTo("createdAt", "<", that.end_time);
 				}
 				if (that.type == -1 && that.select_custom && that.modal1 == false) {
 					query.equalTo('custom', '==', that.select_custom.objectId);
